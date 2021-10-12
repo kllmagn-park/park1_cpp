@@ -5,7 +5,7 @@ language: c
 compiler:
   - clang
 
-before_install:
+install_gtest:
   - git clone https://github.com/google/googletest.git -b release-1.11.0
   - cd googletest
   - mkdir build
@@ -15,14 +15,32 @@ before_install:
   - sudo make install
   - cd ..
   - cd ..
-  - sudo apt-get update
+
+install_valgrind:
   - sudo apt-get install -y valgrind
 
+install_clang_format:
+  - sudo apt-get install -y clang-format
+
+static_check:
+  - clang-format -style=llvm -dump-config > .clang-format
+  - find . -regex '.*\.\(cpp\|hpp\|cu\|c\|h\)' -exec clang-format -style=file -i {} \;
+
+dynamic_check:
+  - valgrind --leak-check=yes ./max_triang_test
+
+before_install:
+  - sudo apt-get update
+  - install_valgrind
+  - install_clang_format
+  - install_gtest
+
 before_script:
+  - static_check
   - mkdir build
   - cd build
   - cmake ..
 
 script:
   - make
-  - valgrind --leak-check=yes ./max_triang_test
+  - dynamic_check
