@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.17)
+cmake_minimum_required(VERSION 3.12)
 project(C_DZ1)
 
 set(CMAKE_C_STANDARD 99)
