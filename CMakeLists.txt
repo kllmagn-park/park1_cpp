@@ -16,4 +16,4 @@ find_package(GTest REQUIRED)
 
 include_directories(${GTEST_INCLUDE_DIRS})
 add_executable(max_triang_test max_triang_test.cpp)
-target_link_libraries(max_triang_test ${GTEST_LIBRARIES} max_triang)
+target_link_libraries(max_triang_test ${GTEST_LIBRARIES} max_triang pthread)
