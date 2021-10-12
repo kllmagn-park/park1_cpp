@@ -5,7 +5,7 @@ compiler:
 
 before_install:
   - sudo apt-get update
-  - sudo apt-get install -y googletest
+  - sudo apt-get install -y valgrind
 
 before_script:
   - mkdir build
@@ -14,3 +14,4 @@ before_script:
 
 script:
   - make
+  - valgrind --leak-check=yes ./max_triang_test
