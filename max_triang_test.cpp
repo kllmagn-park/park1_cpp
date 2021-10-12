@@ -18,12 +18,4 @@ int main(int argc, char** argv)
 {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
-
-    /*
-    float X[10] = {1, 5, 8, 7, 4, 5, 6, 3, 4, 2};
-    float Y[10] = {8, 5, 6, 9, 8, 7, 4, 5, 2, 1};
-    int n = 10;
-    float S = max_triang(X, Y, n);
-    printf("%f", S);
-     */
 }
