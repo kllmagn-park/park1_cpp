@@ -14,14 +14,13 @@ TEST(MTR_TEST, VALCHECK) {
     int ans[3] = {2, 4, 9};
     float **pX = arr_to_parr(X, n), **pY = arr_to_parr(Y, n);
     int **pans = max_triang(pX, pY, n);
-    EXPECT_TRUE(pans != nullptr);
-    free(pans);
+    //EXPECT_TRUE(pans != nullptr);
+    int pansf[3];
+    for (int i = 0; i < 3; i++) pansf[i] = *(pans[i]);
     for (int i = 0; i < 3; i++) {
-        pans = max_triang(pX, pY, n);
-        EXPECT_EQ(ans[i], pans[i][0]);
-        free(pans);
+        EXPECT_EQ(ans[i], pansf[i]);
     }
-    free(pX); free(pY);
+    free(pX); free(pY); free(pans);
 }
 
 TEST(MTR_TEST, BADSTATE_CHECK)
