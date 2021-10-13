@@ -8,7 +8,7 @@ compiler:
 before_install:
   - sudo apt-get update
   - sudo apt-get install -y valgrind
-  - sudo apt-get install -y clang-format
+  - sudo apt-get install -y clang-tidy
   - git clone https://github.com/google/googletest.git -b release-1.11.0
   - cd googletest
   - mkdir build
@@ -20,8 +20,7 @@ before_install:
   - cd ..
 
 before_script:
-  - clang-format -style=llvm -dump-config > .clang-format
-  - find . -regex '.*\.\(cpp\|hpp\|cu\|c\|h\)' -exec clang-format -style=file -i {} \;
+  - clang-tidy *.c
   - mkdir build
   - cd build
   - cmake ..
