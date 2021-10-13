@@ -5,10 +5,14 @@ compiler:
 
 install:
   - sudo apt-get update
-  - sudo apt-get install -y valgrind
-  - sudo apt-get install -y libgtest-dev
+  - sudo apt-get install -y python
+  - sudo apt-get install -y python-pip
+  - sudo pip install cpplint
   - sudo apt-get install -y cmake
   - sudo apt-get install -y cppcheck
+  - sudo apt-get install -y gcovr
+  - sudo apt-get install -y valgrind
+  - sudo apt-get install -y libgtest-dev
   - cd /usr/src/gtest
   - sudo cmake .
   - sudo make
@@ -23,6 +27,7 @@ jobs:
         - cd build
         - cmake ..
         - make
+        - cpplint --extensions=c,cpp,h --filter="-legal/copyright,-build/include_what_you_use" ../*.c ../*.h ../*.cpp --recursive
         - cppcheck --inconclusive --enable=all --error-exitcode=1 --check-config -q -v --suppress=missingIncludeSystem ..
 
     - stage: "BuildTest"
@@ -32,4 +37,5 @@ jobs:
         - cmake ..
         - make
         - ./max_triang_test
+        - gcovr -f ../max_triang.c -f ../max_triang_test.cpp -r .. --html -o report.html
         - valgrind --tool=memcheck --leak-check=full --leak-resolution=med --error-exitcode=1 --track-origins=yes ./max_triang_test
