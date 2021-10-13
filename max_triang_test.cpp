@@ -4,7 +4,7 @@
 
 #include <gtest/gtest.h>
 extern "C" {
-#include "max_triang.h"
+#include "./max_triang.h"
 }
 
 TEST(MTR_TEST, VALCHECK) {
@@ -19,8 +19,7 @@ TEST(MTR_TEST, VALCHECK) {
     free(pX); free(pY); free(pans);
 }
 
-TEST(MTR_TEST, BADSTATE_CHECK)
-{
+TEST(MTR_TEST, BADSTATE_CHECK) {
     const int n = 2;
     float X[n] = {2, 4};
     float Y[n] = {3, 5};
@@ -30,8 +29,7 @@ TEST(MTR_TEST, BADSTATE_CHECK)
     free(pans); free(pX); free(pY);
 }
 
-int main(int argc, char** argv)
-{
+int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }

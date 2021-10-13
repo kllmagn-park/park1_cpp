@@ -3,19 +3,16 @@
 #include <limits.h>
 #include <float.h>
 
-#include "max_triang.h"
+#include "./max_triang.h"
 
-static int input_arr(float *arr, const int n, char name)
-{
+static int input_arr(float *arr, const int n, char name) {
     printf("Элементы массива %c (разделенные пробелом и/или новой строкой): ", name);
     for (int i = 0; i < n; i++) {
-        if (scanf("%f", &arr[i]) != 1)
-        {
+        if (scanf("%f", &arr[i]) != 1) {
             printf("Ошибка; неправильный формат ввода.");
             return 1;
         }
-        else if (arr[i] >= FLT_MAX || arr[i] <= FLT_MIN)
-        {
+        else if (arr[i] >= FLT_MAX || arr[i] <= FLT_MIN) {
             printf("Ошибка: значение выходит за допустимые пределы.");
             return 1;
         }
@@ -30,8 +27,7 @@ int main() {
             printf("Ошибка; неправильный формат ввода.");
             return 1;
         }
-        else if (n < 4)
-        {
+        else if (n < 4) {
             printf("Ошибка: количество точек выходит за доступные границы.");
             return 1;
         }
