@@ -38,4 +38,4 @@ jobs:
         - make
         - ./max_triang_test
         - gcovr -f ../max_triang.c -f ../max_triang_test.cpp -r .. --html -o report.html
-        - valgrind --tool=memcheck --leak-check=full --leak-resolution=med --error-exitcode=1 --track-origins=yes ./max_triang_test
+        - valgrind --tool=memcheck --leak-check=full --leak-resolution=med --error-exitcode=1 --show-leak-kinds=all --track-origins=yes ./max_triang_test
