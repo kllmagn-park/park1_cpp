@@ -22,7 +22,7 @@ static int input_arr(float *arr, const int n, char name) {
 
 int main() {
         printf("Введите количество точек (n): ");
-        int n;
+        int n = 0;
         if (scanf("%d", &n) != 1) {
             printf("Ошибка; неправильный формат ввода.");
             return 1;
