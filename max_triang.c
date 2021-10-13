@@ -13,6 +13,15 @@ const float** arr_to_parr(float *arr, int n) {
     return out;
 }
 
+void freep(void** arr, int n)
+{
+    for (int i = 0; i < n; i++)
+    {
+        free(arr[i]);
+    }
+    free(arr);
+}
+
 // =========================================================
 
 struct point {

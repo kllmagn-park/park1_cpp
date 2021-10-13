@@ -21,7 +21,7 @@ static int input_arr(float *arr, int n, char name) {
 }
 
 int memerr() {
-    printf("Критическая ошибка: недостаточно памяти.");
+    perror("Критическая ошибка");
     return 1;
 }
 
@@ -56,19 +56,16 @@ int main() {
         }
         const float **pY = arr_to_parr(Y, n);
         if (pY == NULL) {
-            free(X);
-            free(Y);
-            free(pX);
+            freep((void**)pX, n);
             return memerr();
         }
         const int** inds = max_triang(pX, pY, n);
-        free(X);
-        free(Y);
-        free(pX);
-        free(pY);
+        freep((void**)pX, n);
+        freep((void**)pY, n);
         if (inds != NULL)
             printf("Номера точек: %d %d %d\n", *inds[0], *inds[1], *inds[2]);
         else
             printf("Точки не найдены.");
+        freep((void**)inds, 3);
         return 0;
 }

@@ -8,4 +8,5 @@
 #include <stdlib.h>
 
 const float** arr_to_parr(float *arr, int n);
+void freep(void **arr, int n);
 const int** max_triang(const float **X, const float **Y, int n);
