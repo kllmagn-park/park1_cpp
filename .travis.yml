@@ -27,7 +27,7 @@ jobs:
         - cd build
         - cmake ..
         - make
-        - cpplint --extensions=c,cpp,h --filter="-legal/copyright,-build/include_what_you_use" ../*.c ../*.h ../*.cpp --recursive
+        - cpplint --recursive --extensions=c,cpp,h --filter="-legal/copyright,-build/include_what_you_use" ../*.c ../*.h ../*.cpp
         - cppcheck --inconclusive --enable=all --error-exitcode=1 --check-config -q -v --suppress=missingIncludeSystem ..
 
     - stage: "BuildTest"

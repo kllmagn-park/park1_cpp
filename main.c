@@ -6,13 +6,13 @@
 #include "./max_triang.h"
 
 static int input_arr(float *arr, const int n, char name) {
-    printf("Элементы массива %c (разделенные пробелом и/или новой строкой): ", name);
+    printf("Элементы массива %c (разделенные пробелом и/или новой строкой): "
+           , name);
     for (int i = 0; i < n; i++) {
         if (scanf("%f", &arr[i]) != 1) {
             printf("Ошибка; неправильный формат ввода.");
             return 1;
-        }
-        else if (arr[i] >= FLT_MAX || arr[i] <= FLT_MIN) {
+        } else if (arr[i] >= FLT_MAX || arr[i] <= FLT_MIN) {
             printf("Ошибка: значение выходит за допустимые пределы.");
             return 1;
         }
@@ -26,8 +26,7 @@ int main() {
         if (scanf("%d", &n) != 1) {
             printf("Ошибка; неправильный формат ввода.");
             return 1;
-        }
-        else if (n < 4) {
+        } else if (n < 4) {
             printf("Ошибка: количество точек выходит за доступные границы.");
             return 1;
         }
@@ -40,7 +39,7 @@ int main() {
             return 1;
         const float **pX = arr_to_parr(X, n);
         const float **pY = arr_to_parr(Y, n);
-        int** inds = max_triang(pX, pY, n);
+        const int** inds = max_triang(pX, pY, n);
         free(pX);
         free(pY);
         if (inds != NULL)

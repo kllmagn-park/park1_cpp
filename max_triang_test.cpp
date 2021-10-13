@@ -13,7 +13,7 @@ TEST(MTR_TEST, VALCHECK) {
     float Y[n] = {8, 5, 6, 9, 8, 7, 4, 5, 2, 1};
     int ans[3] = {2, 0, 9};
     const float **pX = arr_to_parr(X, n), **pY = arr_to_parr(Y, n);
-    int **pans = max_triang(pX, pY, n);
+    const int **pans = max_triang(pX, pY, n);
     EXPECT_TRUE(pans != nullptr);
     for (int i = 0; i < 3; i++) EXPECT_EQ(ans[i], pans[i][0]);
     free(pX); free(pY); free(pans);
@@ -24,8 +24,8 @@ TEST(MTR_TEST, BADSTATE_CHECK) {
     float X[n] = {2, 4};
     float Y[n] = {3, 5};
     const float **pX = arr_to_parr(X, n), **pY = arr_to_parr(Y, n);
-    int **pans = max_triang(pX, pY, n);
-    EXPECT_TRUE( pans == nullptr);
+    const int **pans = max_triang(pX, pY, n);
+    EXPECT_TRUE(pans == nullptr);
     free(pans); free(pX); free(pY);
 }
 
