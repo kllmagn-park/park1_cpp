@@ -4,4 +4,8 @@
 
 #pragma once
 
-float max_triang(float const *X, float const *Y, int n);
+#include <string.h>
+#include <stdlib.h>
+
+float** arr_to_parr(float *arr, int n);
+int** max_triang(float **X, float **Y, int n);
