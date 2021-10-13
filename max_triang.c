@@ -4,8 +4,11 @@
 
 #include "./max_triang.h"
 
-const float** arr_to_parr(float *arr, const int n) {
+const float** arr_to_parr(float *arr, int n) {
     const float **out = (const float**)malloc(sizeof(float*)*n);
+    if (out == NULL) {
+        return NULL;
+    }
     for (int i = 0; i < n; i++) out[i] = &arr[i];
     return out;
 }
@@ -26,10 +29,16 @@ const int** max_triang(const float **X, const float **Y, int n) {
     if (n < 3) {  // доступно меньше трех точек
         return NULL;
     }
-    static int pi1, pi2, pi3;  // возвращаемые индексы точек
-    pi1 = 0, pi2 = 1, pi3 = 2;
+    // возвращаемые индексы точек
+    int *pi1 = malloc(sizeof(int));
+    int *pi2 = malloc(sizeof(int));
+    int *pi3 = malloc(sizeof(int));
+    *pi1 = 0, *pi2 = 1, *pi3 = 2;
     const int **pis = (const int**)malloc(sizeof(int*)*3);
-    pis[0] = &pi1; pis[1] = &pi2; pis[2] = &pi3;
+    if (pis == NULL) {
+        return NULL;
+    }
+    pis[0] = pi1; pis[1] = pi2; pis[2] = pi3;
     if (n == 3) {
         return pis;
     }
@@ -44,9 +53,9 @@ const int** max_triang(const float **X, const float **Y, int n) {
                 S_tmp = form_S(p1, p2, p3);
                 if (S_tmp > S) {
                     S = S_tmp;
-                    pi1 = i;
-                    pi2 = j;
-                    pi3 = k;
+                    *pi1 = i;
+                    *pi2 = j;
+                    *pi3 = k;
                 }
             }
     }

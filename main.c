@@ -5,7 +5,7 @@
 
 #include "./max_triang.h"
 
-static int input_arr(float *arr, const int n, char name) {
+static int input_arr(float *arr, int n, char name) {
     printf("Элементы массива %c (разделенные пробелом и/или новой строкой): "
            , name);
     for (int i = 0; i < n; i++) {
@@ -20,6 +20,11 @@ static int input_arr(float *arr, const int n, char name) {
     return 0;
 }
 
+int memerr() {
+    printf("Критическая ошибка: недостаточно памяти.");
+    return 1;
+}
+
 int main() {
         printf("Введите количество точек (n): ");
         int n = 0;
@@ -30,16 +35,35 @@ int main() {
             printf("Ошибка: количество точек выходит за доступные границы.");
             return 1;
         }
-
-        float X[n];
+        float *X = (float*)malloc(sizeof(float)*n);
+        if (X == NULL) {
+            return memerr();
+        }
         if (input_arr(X, n, 'X'))
             return 1;
-        float Y[n];
+        float *Y = (float*)malloc(sizeof(float)*n);
+        if (Y == NULL) {
+            free(X);
+            return memerr();
+        }
         if (input_arr(Y, n, 'Y'))
             return 1;
         const float **pX = arr_to_parr(X, n);
+        if (pX == NULL) {
+            free(X);
+            free(Y);
+            return memerr();
+        }
         const float **pY = arr_to_parr(Y, n);
+        if (pY == NULL) {
+            free(X);
+            free(Y);
+            free(pX);
+            return memerr();
+        }
         const int** inds = max_triang(pX, pY, n);
+        free(X);
+        free(Y);
         free(pX);
         free(pY);
         if (inds != NULL)
