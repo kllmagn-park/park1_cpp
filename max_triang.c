@@ -74,12 +74,14 @@ static combos form_combo(int* arr, const int n, const int k) {
     }
 }
 
+static int pi1, pi2, pi3;
+
 int** max_triang(float **X, float **Y, const int n)
 {
     if (n < 3) return NULL;
     float S = 0, S_tmp;
     float *p1[2]; float *p2[2]; float *p3[2];
-    int pi1 = 0, pi2 = 1, pi3 = 2;
+    pi1 = 0, pi2 = 1, pi3 = 2;
     int **pis = (int**)malloc(sizeof(int*)*3);
     pis[0] = &pi1; pis[1] = &pi2; pis[2] = &pi3;
     if (n == 3) return pis;
