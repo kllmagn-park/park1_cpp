@@ -5,17 +5,21 @@
 
 #include "./max_triang.h"
 
-static int input_arr(float *arr, int n, char name) {
+static int input_arr(float **arr, int n, char name) {
     printf("Элементы массива %c (разделенные пробелом и/или новой строкой): "
            , name);
     for (int i = 0; i < n; i++) {
-        if (scanf("%f", &arr[i]) != 1) {
+        float *x = malloc(sizeof(float));
+        if (scanf("%f", x) != 1) {
             printf("Ошибка; неправильный формат ввода.");
+            free(x);
             return 1;
-        } else if (arr[i] >= FLT_MAX || arr[i] <= FLT_MIN) {
+        } else if (*x >= FLT_MAX || *x <= FLT_MIN) {
             printf("Ошибка: значение выходит за допустимые пределы.");
+            free(x);
             return 1;
         }
+        arr[i] = x;
     }
     return 0;
 }
@@ -35,33 +39,27 @@ int main() {
             printf("Ошибка: количество точек выходит за доступные границы.");
             return 1;
         }
-        float *X = (float*)malloc(sizeof(float)*n);
+        float **X = (float**)malloc(sizeof(float*)*n);
         if (X == NULL) {
             return memerr();
         }
-        if (input_arr(X, n, 'X'))
+        if (input_arr(X, n, 'X')) {
+            freep((void **) X, n);
             return 1;
-        float *Y = (float*)malloc(sizeof(float)*n);
+        }
+        float **Y = (float**)malloc(sizeof(float*)*n);
         if (Y == NULL) {
-            free(X);
+            freep((void**)X, n);
             return memerr();
         }
-        if (input_arr(Y, n, 'Y'))
+        if (input_arr(Y, n, 'Y')) {
+            freep((void*)X, n);
+            freep((void*)Y, n);
             return 1;
-        const float **pX = arr_to_parr(X, n);
-        if (pX == NULL) {
-            free(X);
-            free(Y);
-            return memerr();
         }
-        const float **pY = arr_to_parr(Y, n);
-        if (pY == NULL) {
-            freep((void**)pX, n);
-            return memerr();
-        }
-        const int** inds = max_triang(pX, pY, n);
-        freep((void**)pX, n);
-        freep((void**)pY, n);
+        const int** inds = max_triang((const float**)X, (const float**)Y, n);
+        freep((void**)X, n);
+        freep((void**)Y, n);
         if (inds != NULL)
             printf("Номера точек: %d %d %d\n", *inds[0], *inds[1], *inds[2]);
         else
