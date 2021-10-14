@@ -3,13 +3,22 @@
 #include <limits.h>
 #include <float.h>
 
+#include "./tools.h"
 #include "./max_triang.h"
+
+static int memerr() {
+    perror("Критическая ошибка");
+    return 1;
+}
 
 static int input_arr(float **arr, int n, char name) {
     printf("Элементы массива %c (разделенные пробелом и/или новой строкой): "
            , name);
     for (int i = 0; i < n; i++) {
         float *x = malloc(sizeof(float));
+        if (x == NULL) {
+            return memerr();
+        }
         if (scanf("%f", x) != 1) {
             printf("Ошибка; неправильный формат ввода.");
             free(x);
@@ -22,11 +31,6 @@ static int input_arr(float **arr, int n, char name) {
         arr[i] = x;
     }
     return 0;
-}
-
-int memerr() {
-    perror("Критическая ошибка");
-    return 1;
 }
 
 int main() {
@@ -44,7 +48,7 @@ int main() {
             return memerr();
         }
         if (input_arr(X, n, 'X')) {
-            freep((void **) X, n);
+            freep((void**)X, n);
             return 1;
         }
         float **Y = (float**)malloc(sizeof(float*)*n);
@@ -53,8 +57,8 @@ int main() {
             return memerr();
         }
         if (input_arr(Y, n, 'Y')) {
-            freep((void*)X, n);
-            freep((void*)Y, n);
+            freep((void**)X, n);
+            freep((void**)Y, n);
             return 1;
         }
         const int** inds = max_triang((const float**)X, (const float**)Y, n);

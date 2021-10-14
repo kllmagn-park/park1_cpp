@@ -4,24 +4,6 @@
 
 #include "./max_triang.h"
 
-const float** arr_to_parr(float *arr, int n) {
-    const float **out = (const float**)malloc(sizeof(float*)*n);
-    if (out == NULL) {
-        return NULL;
-    }
-    for (int i = 0; i < n; i++) out[i] = &arr[i];
-    return out;
-}
-
-void freep(void** arr, int n) {
-    for (int i = 0; i < n; i++) {
-        free(arr[i]);
-    }
-    free(arr);
-}
-
-// =========================================================
-
 struct point {
     float x;
     float y;
@@ -38,8 +20,19 @@ const int** max_triang(const float **X, const float **Y, int n) {
     }
     // возвращаемые индексы точек
     int *pi1 = malloc(sizeof(int));
+    if (pi1 == NULL)
+        return NULL;
     int *pi2 = malloc(sizeof(int));
+    if (pi2 == NULL) {
+        free(pi1);
+        return NULL;
+    }
     int *pi3 = malloc(sizeof(int));
+    if (pi3 == NULL) {
+        free(pi2);
+        free(pi3);
+        return NULL;
+    }
     *pi1 = 0, *pi2 = 1, *pi3 = 2;
     const int **pis = (const int**)malloc(sizeof(int*)*3);
     if (pis == NULL) {
