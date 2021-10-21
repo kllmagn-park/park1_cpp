@@ -13,7 +13,6 @@ install:
   - sudo apt-get install -y gcovr
   - sudo apt-get install -y lynx
   - sudo apt-get install -y valgrind
-  - sudo apt-get install -y libgtest-dev
   - cd /usr/src/gtest
   - sudo cmake .
   - sudo make
@@ -24,19 +23,15 @@ jobs:
   include:
     - stage: "BuildCheck"
       script:
-        - mkdir build
-        - cd build
-        - cmake ..
-        - make
+        - cmake -B build .
+        - make -C build
         - cpplint --recursive --extensions=c,cpp,h --filter="-readability/casting,-legal/copyright,-build/include_what_you_use" ../*.c ../*.h ../*.cpp
         - cppcheck --inconclusive --enable=all --error-exitcode=1 --check-config -q -v --suppress=missingIncludeSystem ..
 
     - stage: "BuildTest"
       script:
-        - mkdir build
-        - cd build
-        - cmake ..
-        - make
+        - cmake -B build .
+        - make -C build
         - ./max_triang_test
         - gcovr -r .. --html -o report.html
         - lynx --dump ./report.html
